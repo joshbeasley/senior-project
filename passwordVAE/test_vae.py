@@ -34,7 +34,7 @@ if __name__ == "__main__":
 
     # evaluate VAE
     if args.test:
-        model.generate_passwords("output.txt", args.num)
+        model.generate_passwords(args.num)
 
 """ Example Commands
     python3 test_vae.py --train 100K_rockyou_train.txt --save the_first_vae --epochs 10 --batch 64 --gpus 2

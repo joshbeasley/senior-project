@@ -44,9 +44,21 @@ def create_training_testing_set(infile, train_outfile, test_outfile, ratio):
     train_file.close()
     # test_file.close()
 
-create_training_testing_set("datasets/1M_rockyou_train.txt", "datasets/100K_rockyou_train.txt", "", 0.8)
+def get_accuracy(test_file, data_file):
+    test = open(test_file, "r")
+    data = open(data_file, "r")
 
+    test_lines = test.readlines()
+    data_lines_full = data.readlines()
+    nums = [1,10,100,1000,10000,100000]
 
+    for num in nums:
+        data_lines = data_lines_full[:num]
+        matches = list(set(test_lines).intersection(data_lines))
+        num_matches = len(matches)
+        print(num_matches)
+
+get_accuracy("datasets/myspace.txt", "passwordLSTM/output_full.txt")
     
 
 

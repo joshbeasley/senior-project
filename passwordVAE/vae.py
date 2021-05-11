@@ -162,7 +162,7 @@ class passwordVAE:
             filename -- the name of a file containing data saved by the save
                         method for a compatible policy
         """
-        # self.vae = tf.keras.models.load_model(filename)
+        # self.vae = tf.keras.models.load_model("models/{}".format(filename))
         self.decoder = tf.keras.models.load_model("models/{}_decoder".format(filename))
         with open('models/{}_charset.pickle'.format(filename), 'rb') as handle:
             self.charset = pickle.load(handle)
@@ -189,7 +189,7 @@ class passwordVAE:
 
             vectors -- an array of one hot vectors
         """
-        #self.charset = {'C', '|', '<', "'", 's', '$', 'M', 'e', ')', '=', '_', 'i', 'k', 'Z', '[', '+', 'j', '2', 'W', '3', 'X', 'K', 'd', 'q', 'Y', '\\', 'R', 'v', 'm', '&', 'S', 'b', 'h', ';', 'g', 'N', 'H', '1', '-', 'J', 'P', ':', '"', '*', ' ', '0', 'I', 'O', '{', '5', '?', '/', 'L', 'U', '@', 'B', 'w', 'c', 'V', '~', '4', '#', 'G', '>', 'T', 'r', 'f', '(', 'E', 'n', 'u', 'p', '}', '8', ',', 'Q', 'x', 'A', '6', 't', 'y', '`', 'o', 'l', 'F', '.', '^', 'a', ']', '9', 'D', '7', 'z', '%', '!'}
+        self.charset = {'C', '|', '<', "'", 's', '$', 'M', 'e', ')', '=', '_', 'i', 'k', 'Z', '[', '+', 'j', '2', 'W', '3', 'X', 'K', 'd', 'q', 'Y', '\\', 'R', 'v', 'm', '&', 'S', 'b', 'h', ';', 'g', 'N', 'H', '1', '-', 'J', 'P', ':', '"', '*', ' ', '0', 'I', 'O', '{', '5', '?', '/', 'L', 'U', '@', 'B', 'w', 'c', 'V', '~', '4', '#', 'G', '>', 'T', 'r', 'f', '(', 'E', 'n', 'u', 'p', '}', '8', ',', 'Q', 'x', 'A', '6', 't', 'y', '`', 'o', 'l', 'F', '.', '^', 'a', ']', '9', 'D', '7', 'z', '%', '!'}
         return "".join([list(self.charset)[np.argmax(vec)] for vec in vectors])
 
     def reconstruct_passwords(self, num):
@@ -204,14 +204,13 @@ class passwordVAE:
         for pw in reconstructed_passwords:
             print(pw)
 
-    def generate_passwords(self, outfile, num=30):
+    def generate_passwords(self,num=30):
         """ Generates passwords from a random normal distribution using the decoder
             side of the trained VAE
 
             num -- number of passwords to generate
             outfile -- file location to output these passwords to
         """
-        f = open(outfile, "w")
         mu, sigma = 0, 3
         new_passwords = []
         for i in range(num):
@@ -220,8 +219,7 @@ class passwordVAE:
             new_password_str = self.unpad(self.one_hot_decode(new_password_vec[0]))
             new_passwords.append(new_password_str)
             print(new_password_str)
-            f.write(new_password_str)
-        f.close()
+
 
 
 

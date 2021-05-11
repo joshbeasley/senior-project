@@ -35,7 +35,7 @@ if __name__ == "__main__":
 
     # evaluate RNN
     if args.test:
-        print(model.complete_text("p", "output.txt", args.chars, args.temp))
+        print(model.complete_text("a", "output.txt", args.chars, args.temp))
         model.get_accuracy("output.txt", "rockyou_test.txt")
 
 """ Example Commands
